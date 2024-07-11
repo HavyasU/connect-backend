@@ -8,7 +8,6 @@ import router from "./routes/index.js";
 import path from "path";
 import helmet from "helmet"; //security 
 import errorMiddleware from "./middleware/errorMiddleware.js";
-import { PiPath } from "react-icons/pi";
 config(); //dot env
 const app = express();
 const port = process.env.PORT || 8000;
