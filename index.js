@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 const __dirname = path.resolve(path.dirname(""));
 
-const allowedOrigins = ['https://connect-social-media-mu.vercel.app/'];
+const allowedOrigins = ['https://connect-social-media-havyasrais-projects.vercel.app/'];
 
 app.use(cors({
     origin: allowedOrigins
@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use((req, res, next) => {
     console.log(req.headers.origin);
-    res.header('Access-Control-Allow-Origin', 'https://connect-social-media-n5fznp35i-havyasrais-projects.vercel.app');
+    res.header('Access-Control-Allow-Origin', 'https://connect-social-media-havyasrais-projects.vercel.app/');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
