@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 const __dirname = path.resolve(path.dirname(""));
 
-const allowedOrigins = ['https://connect-social-media-mu.vercel.app/login'];
+const allowedOrigins = ['https://connect-social-media-mu.vercel.app/'];
 
 app.use(cors({
     origin: allowedOrigins
