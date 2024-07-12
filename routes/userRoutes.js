@@ -16,18 +16,21 @@ import {
 import userAuth from "../middleware/authMiddleware.js";
 const router = express.Router();
 import multer from "multer";
+import { GridFsStorage } from "multer-gridfs-storage";
 
 
-const storage = multer.diskStorage({
-    destination: "uploads",
-    filename: (req, file, cb) => {
-        return cb(null, `${Date.now()}${file.originalname}`);
-    }
+
+const storage = new GridFsStorage({
+    url: process.env.DB_URL,
+    file: (req, file) => {
+        return {
+            bucketName: 'uploads', // collection name
+            filename: file.originalname,
+        };
+    },
 });
+const upload = multer({ storage });
 
-const upload = multer({
-    storage: storage
-});
 
 //verify email
 router.post("/verify-email", verifyEmail);

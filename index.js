@@ -7,27 +7,28 @@ import bodyParser from "body-parser";
 import router from "./routes/index.js";
 import path from "path";
 import errorMiddleware from "./middleware/errorMiddleware.js";
+import { getImage } from "./controllers/fileControllers.js";
 config(); //dot env
 const app = express();
 const port = process.env.PORT || 8000;
-const __dirname = path.resolve(path.dirname(""));
 
-const allowedOrigins = ['https://connect-social-media-havyasrais-projects.vercel.app', 'https://connect-social-media-mu.vercel.app'];
+const allowedOrigins = ['https://connect-social-media-havyasrais-projects.vercel.app', 'https://connect-social-media-mu.vercel.app', "http://localhost:5173"];
 
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
 app.use((req, res, next) => {
-    console.log(req.headers.origin);
-    res.header('Access-Control-Allow-Origin', 'https://connect-social-media-mu.vercel.app');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    if (process.env.NODE_ENV === 'production') {
+        console.log(req.headers.origin);
+        res.header('Access-Control-Allow-Origin', 'https://connect-social-media-mu.vercel.app');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    }
     next();
 });
 //middlewares
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/uploads/:filename', getImage);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

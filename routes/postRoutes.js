@@ -1,5 +1,5 @@
-import express from "express";
-import userAuth from "../middleware/authMiddleware.js";
+import express from 'express';
+import userAuth from '../middleware/authMiddleware.js';
 import {
   commentPost,
   createPost,
@@ -11,39 +11,39 @@ import {
   likePost,
   likePostComment,
   replyPostComment,
-} from "../controllers/postController.js";
-import multer from "multer";
+} from '../controllers/postController.js';
+import multer from 'multer';
+import { GridFsStorage } from 'multer-gridfs-storage';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    return cb(null, `${Date.now()}${file.originalname}`);
-  }
-});
-const upload = multer({
-  storage: storage
-});
+import uploads from '../utils/uploads.js';
 
-// crete post
-router.post("/create-post", upload.single('media'), userAuth, createPost);
-// get posts
-router.post("/", userAuth, getPosts);
-router.post("/:id", userAuth, getPost);
+// Create post with media upload
+router.post('/create-post', uploads.single('media'), userAuth, createPost);
 
-router.post("/get-user-post/:id", userAuth, getUserPost);
+// Get all posts
+router.post('/', userAuth, getPosts);
 
-// get comments
-router.get("/comments/:postId", getComments);
+// Get single post
+router.get('/:id', userAuth, getPost);
 
-//like and comment on posts
-router.post("/like/:id", userAuth, likePost);
-router.post("/like-comment/:id/:rid?", userAuth, likePostComment);
-router.post("/comment/:id", userAuth, commentPost);
-router.post("/reply-comment/:id", userAuth, replyPostComment);
+// Get user posts
+router.get('/get-user-post/:id', userAuth, getUserPost);
 
-//delete post
-router.delete("/delete-post/:id", userAuth, deletePost);
+// Get comments
+router.get('/comments/:postId', getComments);
+
+// Like and comment on posts
+router.post('/like/:id', userAuth, likePost);
+router.post('/like-comment/:id/:rid?', userAuth, likePostComment);
+router.post('/comment/:id', userAuth, commentPost);
+router.post('/reply-comment/:id', userAuth, replyPostComment);
+
+// Delete post
+router.delete('/delete-post/:id', userAuth, deletePost);
 
 export default router;
