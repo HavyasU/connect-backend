@@ -13,12 +13,17 @@ const app = express();
 const port = process.env.PORT || 8000;
 const __dirname = path.resolve(path.dirname(""));
 
-const allowedOrigins = ['https://connect-social-media-n5fznp35i-havyasrais-projects.vercel.app'];
+const allowedOrigins = ['https://connect-social-media-mu.vercel.app/login'];
 
 app.use(cors({
-    origin: [allowedOrigins]
+    origin: allowedOrigins
 }));
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://connect-social-media-n5fznp35i-havyasrais-projects.vercel.app');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 //middlewares
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
