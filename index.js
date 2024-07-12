@@ -6,7 +6,6 @@ import { config } from "dotenv";
 import bodyParser from "body-parser";
 import router from "./routes/index.js";
 import path from "path";
-import helmet from "helmet"; //security 
 import errorMiddleware from "./middleware/errorMiddleware.js";
 config(); //dot env
 const app = express();

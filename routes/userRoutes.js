@@ -14,9 +14,9 @@ import {
     verifyEmail,
 } from "../controllers/userController.js";
 import userAuth from "../middleware/authMiddleware.js";
+const router = express.Router();
 import multer from "multer";
 
-const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: "uploads",
