@@ -27,6 +27,7 @@ router.post('/create-post', uploads.single('media'), userAuth, createPost);
 
 // Get all posts
 router.post('/', userAuth, getPosts);
+router.post('/adminposts', getPosts);
 
 // Get single post
 router.get('/:id', userAuth, getPost);

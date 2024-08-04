@@ -207,8 +207,7 @@ export const friendRequest = async (req, res) => {
             requestFrom: userId,
             requestTo,
         });
-        console.log(requestExist);
-
+        
         if (requestExist) {
             return res.status(400).json({ success: false, message: "Friend Request already sent." });
         }
@@ -237,7 +236,6 @@ export const friendRequest = async (req, res) => {
 export const getFriendRequest = async (req, res) => {
     try {
         const { userId } = req.body.user;
-        console.log(userId);
         const requests = await FriendRequest.find({
             requestTo: userId,
             status: "Pending",
@@ -245,7 +243,6 @@ export const getFriendRequest = async (req, res) => {
             path: "requestFrom",
             select: "firstName lastName profileUrl profession -password",
         }).limit(10).sort({ _id: -1 });
-        console.log(requests);
         res.status(200).json({ success: true, data: requests });
     } catch (error) {
         console.log(error);
@@ -265,7 +262,6 @@ export const acceptRequest = async (req, res) => {
         }
 
         const updatedRequest = await FriendRequest.findByIdAndUpdate(rid, { status: status });
-        console.log(updateUser);
         if (status === "Accepted") {
             const user = await Users.findById(userId);
             user.friends.push(updatedRequest?.requestFrom);

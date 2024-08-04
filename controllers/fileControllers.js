@@ -15,7 +15,6 @@ conn.once('open', () => {
 
 export const getImage = async (request, response) => {
     try {
-        console.log(request.params.filename);
         const file = await gfs.files.findOne({ filename: request.params.filename });
         if (!file) {
             response.json({

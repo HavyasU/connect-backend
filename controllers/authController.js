@@ -70,7 +70,6 @@ export const login = async (req, res, next) => {
         }
 
         const isPassMatch = await compareString(password, userExists?.password);
-        console.log(isPassMatch);
         if (!isPassMatch) {
             res.json({
                 success: false,

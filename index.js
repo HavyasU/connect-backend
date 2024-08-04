@@ -12,7 +12,7 @@ config(); //dot env
 const app = express();
 const port = process.env.PORT || 8000;
 
-const allowedOrigins = ['https://connect-social-media-havyasrais-projects.vercel.app', 'https://connect-social-media-mu.vercel.app', "http://localhost:5173"];
+const allowedOrigins = ['https://connect-social-media-havyasrais-projects.vercel.app', 'https://connect-social-media-mu.vercel.app', "http://localhost:5173", "http://localhost:5174"];
 
 app.use(cors({
     origin: allowedOrigins,
