@@ -1,7 +1,6 @@
 import multer from 'multer';
 import { GridFsStorage } from 'multer-gridfs-storage';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 
 dotenv.config();
 const DB_URL = process.env.DB_URL;
