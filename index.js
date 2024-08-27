@@ -130,7 +130,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(errorMiddleware); // Error middleware
 
 app.get('/uploads/:filename', getImage);
