@@ -33,8 +33,11 @@ const io = new Server(server, {
         origin: allowedOrigins,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization'],
-    }
+        transports: ["websocket"],
+    },
+    allowEIO3: true
 });
+
 
 const users = [];
 
