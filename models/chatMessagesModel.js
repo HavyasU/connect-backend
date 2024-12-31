@@ -22,9 +22,13 @@ const chatMessageSchema = new mongoose.Schema({
     "fileUrl": {
         type: "String"
     },
+    "recieved": {
+        type: String,
+        default: null
+    },
     "read": {
-        type: "Boolean",
-        default: false
+        type: String,
+        default: null
     },
 
 }, { timestamps: true });

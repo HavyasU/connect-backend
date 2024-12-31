@@ -207,7 +207,7 @@ export const friendRequest = async (req, res) => {
             requestFrom: userId,
             requestTo,
         });
-        
+
         if (requestExist) {
             return res.status(400).json({ success: false, message: "Friend Request already sent." });
         }
@@ -324,7 +324,7 @@ export const suggestedFriends = async (req, res) => {
         // Send the response with the found users
         res.status(200).json({ success: true, data: queryResult });
     } catch (error) {
-        console.error("Error in suggestedFriends:", error);
+        console.error("Error in suggestedFriends:");
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };

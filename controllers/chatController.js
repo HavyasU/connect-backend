@@ -126,20 +126,7 @@ export const getMessages = async (req, res) => {
         const chatMessages = await chatMessagesModel.find({
             "conversationId": conversationId
         }).populate("senderId").populate("recieverId");
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
+
         res.status(200).send({
             success: true,
             data: chatMessages
@@ -249,20 +236,79 @@ export const updateMessageAsRead = async (req, res) => {
     }
 };
 
-
 export const getUserChatStatus = async (req, res) => {
+    const { userId } = req?.params;
     try {
-        const { userId } = req.params;
+        if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).send({
+                success: false,
+                message: "Valid User ID is required"
+            });
+        }
+
+
         const User = await Users.findById(userId);
+
+        if (!User) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found"
+            });
+        }
+
         res.status(200).send({
-            "success": true,
-            "chatStatus": User?.chatStatus
+            success: true,
+            chatStatus: User.chatStatus || "No chat status available"  // Optional fallback
         });
     } catch (error) {
-        console.log(error);
+        console.error("Error in getUserChatStatus:", error);
         res.status(500).send({
-            "success": false,
-            "message": "Error"
+            success: false,
+            message: "An error occurred while retrieving chat status"
         });
+    }
+};
+export const updateChatStatus = async (req, res) => {
+    const { userId, chatStatus } = req.body;
+    try {
+        // Check if userId is null, undefined, or not a valid ObjectId
+        if (!userId || userId === 'null' || userId === null || userId === undefined) {
+            return res.status(400).send({
+                success: false,
+                message: "Valid User ID is required"
+            });
+        }
+
+        // Validate if userId is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).send({
+                success: false,
+                message: "Invalid User ID format"
+            });
+        }
+
+        const user = await Users.findById(userId);
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        user.chatStatus = chatStatus;
+        await user.save();
+
+        res.status(200).send({
+            success: true,
+            message: "Chat status updated successfully"
+        });
+
+    } catch (error) {
+        console.error("Error in updateChatStatus:", error);
+        res.status(500).send({
+            success: false,
+            message: "An error occurred while updating chat status"
+        });
+
     }
 };

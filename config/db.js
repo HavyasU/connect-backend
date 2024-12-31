@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Grid from "gridfs-stream";
 
 dotenv.config();
 
