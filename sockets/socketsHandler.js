@@ -33,10 +33,9 @@ export const socketHandler = (io) => {
         });
 
         socket.on("private_message", async (data) => {
-            const { senderId,
-                recieverId,
-                text,
-                fileUrl } = data;
+            console.log(data);
+            const {
+                recieverId } = data;
 
             const savedMessage = await saveMessage(data);
             let userIndex = findUserByUserId(recieverId);
@@ -44,10 +43,10 @@ export const socketHandler = (io) => {
             const toSocketId = users[userIndex]?.socketId;
             console.log(userIndex);
 
-            io.to(socket.id).emit("private_message", savedMessage);
+            io.to(socket.id)?.emit("private_message", savedMessage);
             if (toSocketId) {
                 console.log("Message is sent");
-                socket.to(toSocketId).emit("private_message", savedMessage);
+                io.to(toSocketId)?.emit("private_message", savedMessage);
                 // update message as recived to sender
                 // io.to(socket.id).emit("message_delivered", );
             }

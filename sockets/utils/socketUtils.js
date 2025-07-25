@@ -36,8 +36,7 @@ export const findChats = async (conversationId) => {
             "conversationId": conversationId
         })
             .populate("senderId")
-            .populate("recieverId")
-            .sort({ createdAt: -1 });
+            .populate("recieverId");
 
 
         return chatMessages;
