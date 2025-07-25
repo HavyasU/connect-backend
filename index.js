@@ -26,7 +26,7 @@ const allowedOrigins = [
     'http://localhost:5174',
     'http://192.168.199.237:5173',
     'https://admin.socket.io',
-    'https"//connect.havyas.me',
+    'https://connect.havyas.me',
 ];
 
 // Create HTTP server and Socket.io instance
