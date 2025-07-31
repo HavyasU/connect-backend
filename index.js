@@ -49,6 +49,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+app.use(morgan('combined'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(morgan("dev"));

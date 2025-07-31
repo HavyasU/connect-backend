@@ -13,7 +13,7 @@ export const socketHandler = (io) => {
     };
 
     io.on("connection", (socket) => {
-        console.log(`New client connected: ${socket.id}`);
+        // console.log(`New client connected: ${socket.id}`);
 
         socket.on("active", (userData) => {
             const userIndex = findUserByUserId(userData?._id);
@@ -73,7 +73,7 @@ export const socketHandler = (io) => {
         // });
 
         socket.on("disconnect", () => {
-            console.log(`Client disconnected: ${socket.id}`);
+            // console.log(`Client disconnected: ${socket.id}`);
             const disConnectedUser = findUserBySocketId(socket.id);
             if (disConnectedUser >= 0) {
                 users = users.filter(ele => ele.socketId != socket.id);

@@ -7,7 +7,7 @@ export const createPost = async (req, res, next) => {
     try {
         const { userId } = req.body.user;
         const { description, type } = req.body;
-        const filename = req?.file?.filename ?? "";
+        const filename = req?.file?.path ?? "";
         if (!description) {
             next("You must provide a description");
             return;

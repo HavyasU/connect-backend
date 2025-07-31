@@ -15,21 +15,8 @@ import {
 } from "../controllers/userController.js";
 import userAuth from "../middleware/authMiddleware.js";
 const router = express.Router();
-import multer from "multer";
-import { GridFsStorage } from "multer-gridfs-storage";
 
-
-
-const storage = new GridFsStorage({
-    url: process.env.DB_URL,
-    file: (req, file) => {
-        return {
-            bucketName: 'uploads', // collection name
-            filename: file.originalname,
-        };
-    },
-});
-const upload = multer({ storage });
+import upload from '../utils/uploads.js';
 
 
 //verify email

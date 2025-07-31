@@ -159,7 +159,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         const { firstName, lastName, location, profession } = req.body;
-        const profileUrl = req?.file?.filename;
+        const profileUrl = req?.file?.path || "";
         if (!firstName || !lastName || !profession || !location) {
             return res.json({
                 status: "failed",
@@ -184,7 +184,6 @@ export const updateUser = async (req, res) => {
 
         const token = createJWT(user?._id);
 
-        user.password = undefined;
 
         res.status(200).json({
             success: true,
@@ -202,6 +201,9 @@ export const friendRequest = async (req, res) => {
     try {
         const { userId } = req.body.user;
         const { requestTo } = req.body;
+
+
+
 
         const requestExist = await FriendRequest.findOne({
             requestFrom: userId,
@@ -231,6 +233,7 @@ export const friendRequest = async (req, res) => {
         console.log(error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
+
 };
 
 export const getFriendRequest = async (req, res) => {
@@ -260,6 +263,10 @@ export const acceptRequest = async (req, res) => {
         if (!requestExist) {
             return res.json({ success: false, message: "No Friend Request Found." });
         }
+
+
+
+
 
         const updatedRequest = await FriendRequest.findByIdAndUpdate(rid, { status: status });
         if (status === "Accepted") {
