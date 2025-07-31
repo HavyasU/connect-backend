@@ -17,6 +17,7 @@ const storage = new CloudinaryStorage({
         folder: 'connect-social-media', // Cloudinary folder name
         allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'mov', 'pdf'], // add other formats if needed
         public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+        resource_type: 'auto',
     },
 });
 
