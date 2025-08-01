@@ -22,11 +22,12 @@ const allowedOrigins = [
     'https://connect-social-media-havyasrais-projects.vercel.app',
     'http://192.168.255.237:5500',
     'https://connect-social-media-mu.vercel.app',
-    'http://localhost:5173',
+    'http://localhost:5173',    
     'http://localhost:5174',
     'http://192.168.199.237:5173',
     'https://admin.socket.io',
     'https://connect.havyas.me',
+    'https://admin.connect.havyas.me',
 ];
 
 // Create HTTP server and Socket.io instance
