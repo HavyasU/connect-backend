@@ -1,32 +1,28 @@
-// ERROR MIDDLEWARE | NEXT FUNCTION
-
+// Centralized error handler
+// Ensures consistent shape and proper HTTP codes
 const errorMiddleware = (err, req, res, next) => {
-  const defaultError = {
-    statusCode: 404,
-    success: "failed",
-    message: err,
-  };
+  const statusCode =
+    typeof err?.statusCode === "number" && err.statusCode >= 400
+      ? err.statusCode
+      : 500;
 
+  let message = err?.message || "Internal Server Error";
+
+  // Mongoose validation error
   if (err?.name === "ValidationError") {
-    defaultError.statusCode = 404;
-
-    defaultError.message = Object.values(err, errors)
-      .map((el) => el.message)
-      .join(",");
+    const messages = Object.values(err.errors || {}).map((e) => e.message);
+    message = messages.join(", ") || "Validation error";
   }
 
-  //duplicate error
-
-  if (err.code && err.code === 11000) {
-    defaultError.statusCode = 404;
-    defaultError.message = `${Object.values(
-      err.keyValue
-    )} field has to be unique!`;
+  // Mongo duplicate key error
+  if (err?.code && err.code === 11000) {
+    const fields = Object.keys(err.keyValue || {}).join(", ");
+    message = `${fields || "Field"} must be unique`;
   }
 
-  res.status(defaultError.statusCode).json({
-    success: defaultError.success,
-    message: defaultError.message,
+  res.status(statusCode).json({
+    success: false,
+    message,
   });
 };
 
