@@ -41,6 +41,7 @@ const io = new Server(server, {
     allowEIO3: true
 });
 socketHandler(io);
+app.options('*', cors());
 
 // Security & common middlewares
 app.use(helmet());
